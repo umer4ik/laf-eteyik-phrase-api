@@ -7,7 +7,6 @@ const { categories, phrases } = await getData()
 serve((req) => {
   const url = new URL(req.url)
   const route = url.pathname.substring('/api/v0'.length)
-  console.log(route)
   switch (route) {
     case '/health': {
       return createResponse({ body: { health: 'healthy' } })
