@@ -13,6 +13,8 @@ export const createResponse = ({
   type = 'json'
 }: CreateResponseProps) => {
   const h = new Headers(headers)
+  h.append('Access-Control-Allow-Origin', '*')
+  h.append('Access-Control-Allow-Methods', 'GET')
   if (type === 'json') {
     h.append('Content-Type', 'applications/json; charset=utf-8')
   }
