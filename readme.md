@@ -1,3 +1,3 @@
-# Laf eteyik API
+# Laf eteyik API for phrases
 
-The API for [Laf eteyik phrasal dictionary](https://github.com/umer4ik/laf-eteyik-web)
+The phrases API for [Laf eteyik phrasal dictionary](https://github.com/umer4ik/laf-eteyik-web).
