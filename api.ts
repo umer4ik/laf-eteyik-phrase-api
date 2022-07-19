@@ -11,6 +11,9 @@ serve((req) => {
     case '/health': {
       return createResponse({ body: { health: 'healthy' } })
     }
+    case '/health/text': {
+      return createResponse({ body: JSON.stringify({ health: 'healthy' }), type: 'text' })
+    }
     case '/categories': {
       return createResponse({ body: { categories } })
     }

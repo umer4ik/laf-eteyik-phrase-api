@@ -3,7 +3,7 @@ type CreateResponseProps = {
   body: any,
   status?: number,
   headers?: HeadersInit,
-  type?: 'json'
+  type?: 'json' | 'text'
 }
 
 export const createResponse = ({
@@ -16,10 +16,12 @@ export const createResponse = ({
   h.append('Access-Control-Allow-Origin', '*')
   h.append('Access-Control-Allow-Methods', 'GET')
   if (type === 'json') {
-    h.append('Content-Type', 'applications/json; charset=utf-8')
+    h.append('Content-Type', 'applications/json;charset=utf-8')
+  } else if (type === 'text') {
+    h.append('Content-Type', 'text/plain;charset=utf-8')
   }
   return new Response(
-    JSON.stringify(body),
+    type === 'json' ? JSON.stringify(body) : body,
     {
       status,
       headers: h
