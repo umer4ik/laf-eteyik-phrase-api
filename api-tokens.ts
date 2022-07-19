@@ -3,7 +3,7 @@ export async function getTokens() {
   if (tokens) return tokens
   try {
     const content = await  Deno.readTextFile('api-tokens')
-    tokens = content.split('/r/n')
+    tokens = content.split('\n').filter(x => !!x)
   } catch (error) {
     console.log('api-tokens file is missing')
     console.log(error)
