@@ -1,4 +1,6 @@
-export function logRequest(req: Request) {
+export function logRequest(req: Request, requestId: string) {
   const request = req.clone()
-  console.log(request.headers.get('host') + ': ', request.method)
+  const url = request.url
+  const method = request.method
+  console.log(`${requestId} | ${method} ${url}`)
 }
