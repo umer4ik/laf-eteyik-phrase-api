@@ -14,12 +14,16 @@ export type CategoryPlain = {
   name: Laf,
   additionalInfo: Translation,
   description: Translation,
-  parentCategoryName: string
+  parentCategoryName: string,
+  alias: string,
+  categories?: CategoryPlain[],
+  phrases?: PhrasePlain[]
 }
 
 export type PhrasePlain = {
   laf: Laf,
-  categoryName: string
+  categoryName: string,
+  alias: string
 }
 
 export type UnknownRecord = Record<string, unknown>

@@ -1,15 +1,16 @@
 type CreateResponseProps = {
-  // deno-lint-ignore no-explicit-any
-  body: any,
+  result: Record<string, unknown>,
+  requestId: string,
   status?: number,
   headers?: HeadersInit,
   type?: 'json'
 }
 
 export const createResponse = ({
-  body,
+  result,
   status = 200,
   headers,
+  requestId,
   type = 'json'
 }: CreateResponseProps) => {
   const h = new Headers(headers)
@@ -18,8 +19,12 @@ export const createResponse = ({
   if (type === 'json') {
     h.append('Content-Type', 'application/json;charset=utf-8')
   }
+  h.append('X-Request-Id', requestId)
   return new Response(
-    JSON.stringify(body),
+    JSON.stringify({
+      result,
+      status
+    }),
     {
       status,
       headers: h
