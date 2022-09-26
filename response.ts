@@ -1,5 +1,5 @@
 type CreateResponseProps = {
-  result: Record<string, unknown>,
+  result: Record<string, unknown> | Array<Record<string, unknown>>,
   requestId: string,
   status?: number,
   headers?: HeadersInit,
