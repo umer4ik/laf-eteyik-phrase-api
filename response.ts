@@ -1,5 +1,6 @@
+import { UnknownRecord } from './types.ts'
 type CreateResponseProps = {
-  result: Record<string, unknown> | Array<Record<string, unknown>>,
+  result: UnknownRecord | UnknownRecord[],
   requestId: string,
   status?: number,
   headers?: HeadersInit,

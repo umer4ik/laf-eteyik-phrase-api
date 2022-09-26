@@ -1,4 +1,5 @@
 import { serve } from "https://deno.land/std@0.156.0/http/server.ts";
+import { UnknownRecord } from './types.ts'
 import { createResponse } from './response.ts'
 import { logRequest } from './logger.ts'
 import { controller } from './controller.ts'
@@ -11,7 +12,7 @@ const phrasesPattern = new URLPattern({ pathname: `${API_PREFIX}/phrase/:alias` 
 serve(async (req) => {
   const requestId = crypto.randomUUID()
   logRequest(req, requestId)
-  const wrap = (result: Record<string, unknown> | Array<Record<string, unknown>>, status?: number) => createResponse({ result, requestId, status })
+  const wrap = (result: UnknownRecord | UnknownRecord[], status?: number) => createResponse({ result, requestId, status })
   try {
     if (categoryPattern.exec(req.url)) {
       const alias = categoryPattern.exec(req.url)?.pathname.groups?.alias
