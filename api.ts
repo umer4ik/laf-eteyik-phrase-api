@@ -11,7 +11,7 @@ const phrasesPattern = new URLPattern({ pathname: `${API_PREFIX}/phrase/:alias` 
 serve(async (req) => {
   const requestId = crypto.randomUUID()
   logRequest(req, requestId)
-  const wrap = (result: Record<string, unknown>, status?: number) => createResponse({ result, requestId, status })
+  const wrap = (result: Record<string, unknown> | Array<Record<string, unknown>>, status?: number) => createResponse({ result, requestId, status })
   try {
     if (categoryPattern.exec(req.url)) {
       const alias = categoryPattern.exec(req.url)?.pathname.groups?.alias
@@ -42,10 +42,12 @@ serve(async (req) => {
         return wrap({ health: 'healthy' })
       }
       case '/categories': {
-        return wrap({ categories: await controller.getCategories()})
+        const categories = await controller.getCategories()
+        return wrap(categories)
       }
       case '/phrases': {
-        return wrap({ phrases: await controller.getPhrases() })
+        const phrases = await controller.getPhrases()
+        return wrap(phrases)
       }
       default:
         return wrap({ error: 'not found' }, 404)
