@@ -1,10 +1,14 @@
 import { inMemoryDB } from './in-memory-db.ts'
-import { CategoryPlain } from './types.ts'
+import { CategoryPlain, PhraseDetails } from './types.ts'
+import get from 'https://deno.land/x/lodash@4.17.15-es/get.js'
 
 class Controller {
-  async getCategoryByAlias(alias: string) {
+  async getCategoryBy(by: string, value: string) {
     const categories = await inMemoryDB.getCategories()
-    const category = categories.find(x => x.alias === alias)
+    return categories.find(x => get(x, by) === value)
+  }
+  async getCategoryByAlias(alias: string) {
+    const category = await this.getCategoryBy('alias', alias)
     if (!category) {
       return null
     }
@@ -17,7 +21,13 @@ class Controller {
   }
   async getPhraseByAlias(alias: string) {
     const phrases = await inMemoryDB.getPhrases()
-    return phrases.find(x => x.alias === alias)
+    const phrase = phrases.find(x => x.alias === alias)
+    if (!phrase) return null
+    const cat = await this.getCategoryBy('name.qt.lat', phrase.categoryName)
+    return {
+      ...phrase,
+      category: cat
+    } as PhraseDetails
   }
   async getPhrasesByCategory(category: CategoryPlain) {
     const phrases = await inMemoryDB.getPhrases()
